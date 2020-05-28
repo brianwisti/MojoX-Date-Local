@@ -2,6 +2,8 @@ Revision history for Perl extension MojoX-Date-Local
 
 {{$NEXT}}
 
+0.04 2020-05-28T07:12:29Z
+
     - stop overloading to_string
     - Allow custom formatted output, defaulting to something like RFC-7231
 
