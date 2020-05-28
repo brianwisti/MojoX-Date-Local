@@ -63,7 +63,8 @@
          "web" : "https://github.com/brianwisti/MojoX-Date-Local"
       }
    },
-   "version" : "0.02",
+   "version" : "0.03",
+   "x_authority" : "cpan:BWISTI",
    "x_serialization_backend" : "JSON::PP version 4.04",
    "x_static_install" : 1
 }
