@@ -1,6 +1,6 @@
-requires 'perl', '5.008001';
+requires Mojolicious => '8.50';
 
 on 'test' => sub {
-    requires 'Test::More', '0.98';
+    requires 'Test::More', '1.302175';
 };
 

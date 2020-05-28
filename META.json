@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Mojo::Date, but in my timezone",
    "author" : [
       "Brian Wisti <brianwisti@pobox.com>"
    ],
@@ -42,12 +42,12 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008001"
+            "Mojolicious" : "8.50"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "Test::More" : "1.302175"
          }
       }
    },
