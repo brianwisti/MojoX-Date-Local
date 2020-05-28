@@ -1,9 +1,11 @@
 package MojoX::Date::Local;
 use Mojo::Date -base;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 use POSIX qw(strftime);
+
+our $DEFAULT_FORMAT = '%a, %d %b %Y %H:%M:%S %Z';
 
 sub to_datetime {
 
@@ -21,18 +23,10 @@ sub to_datetime {
   return $timestamp;
 }
 
-# sub to_string { # Sun, 06 Nov 1994 00:49:37 PST }
-sub to_string {
-
-  # RFC 7231 (Sun, 06 Nov 1994 08:49:37 GMT)
-  my $epoch = shift->epoch;
-  my @time  = localtime $epoch;
-  my $fmt
-    = $epoch =~ m{ (\.\d+) $ }x
-    ? '%a, %d %b %Y %H:%M:%S' . $1 . ' %Z'
-    : '%a, %d %b %Y %H:%M:%S %Z';
-  my $timestamp = strftime $fmt, @time;
-  return $timestamp;
+sub format {
+  my @time = localtime shift->epoch;
+  my $fmt  = shift || $DEFAULT_FORMAT;
+  return strftime $fmt, @time;
 }
 
 1;
@@ -42,14 +36,16 @@ __END__
 
 =head1 NAME
 
-MojoX::Date::Local - Mojo::Date, but in my timezone
+MojoX::Date::Local - Mojo::Date, but in my timezone and with custom formats
 
 =head1 SYNOPSIS
 
   use MojoX::Date::Local;
 
-  say MojoX::Date::Local->new;             # => Wed, 27 May 2020 17:39:43 PDT
-  say MojoX::Date::Local->new->to_datetime # => 2020-05-27T17:39:43-07:00
+  my $now = MojoX::Date::Local->new;
+  say $now->to_datetime;        # => 2020-05-27T17:39:43-08:00
+  say $now->format;             # => Wed, 27 May 2020 17:39:43 PDT
+  say $now->format('%H:%M:%S'); # => 17:39:43
 
 =head1 DESCRIPTION
 
@@ -72,18 +68,21 @@ That's mainly useful when logging to the console with a custom L<Mojo::Log> form
   );
 
 
-
 =head1 METHODS
 
-A MojoX::Date::Local provides the same methods as L<Mojo::Date>, overriding two for its own purposes.
+A MojoX::Date::Local provides L<Mojo::Date>'s methods, with a couple changes.
 
 =head2 to_datetime
 
 Render local date+time in L<RFC 3339|http://tools.ietf.org/html/rfc3339> format, with timezone offset.
+If the time has fractional seconds, those will be included in the output.
 
-=head2 to_string
+=head2 format($fmt)
 
-Render local date+time in L<RFC7231|https://tools.ietf.org/html/rfc7231#section-7.1.1.1> format.
+Return presumably locale-appropriate formatting of local date+time per L<POSIX::strftime>'s formatting rules.
+C<'%a, %d %b %Y %H:%M:%S %Z'> is used if C<$fmt> string is not provided. This produces a string similar to but
+not quite compliant with L<RFC 7231|https://tools.ietf.org/html/rfc7231#section-7.1.1.1>, which makes no
+allowances for localization. But it's still nice to have when displaying dates informally.
 
 =head1 SEE ALSO
 
