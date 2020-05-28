@@ -1,7 +1,7 @@
 package MojoX::Date::Local;
 use Mojo::Date -base;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use POSIX qw(strftime);
 

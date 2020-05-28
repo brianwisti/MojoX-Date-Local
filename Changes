@@ -2,6 +2,10 @@ Revision history for Perl extension MojoX-Date-Local
 
 {{$NEXT}}
 
+0.02 2020-05-28T04:14:47Z
+
+    - actually try uploading to CPAN this time?
+
 0.01 2020-05-28T04:10:55Z
 
     - original version
